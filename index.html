@@ -4,1028 +4,343 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>HEXA Mobile Spare</title>
+  <title>HEXA Mobile Spare | iPhone Spare Parts</title>
 
-  <meta
-    name="description"
-    content="HEXA Mobile Spare - iPhone spare parts, Apple and Samsung accessories, tools, iPad and Apple Watch parts."
-  >
+  <meta name="description"
+        content="HEXA Mobile Spare - iPhone, iPad, Apple Watch, Samsung accessories and professional repair tools.">
 
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <!-- ================= HEADER ================= -->
+<!-- =========================================================
+     TOP BAR
+========================================================= -->
 
-  <header class="site-header">
-
-    <div class="container header-inner">
-
-      <a class="brand" href="#home">
-
-        <img
-          src="assets/hexa-logo.jpeg"
-          alt="HEXA Mobile Spare"
-        >
-
-        <div>
-          <strong>HEXA</strong>
-          <span>Mobile Spare</span>
-        </div>
-
-      </a>
+<div class="topbar">
+  <div>🚚 All India Delivery</div>
+  <div>🔐 Secure Checkout</div>
+  <div>💳 UPI & COD Available</div>
+</div>
 
 
-      <div class="search-wrap">
+<!-- =========================================================
+     HEADER
+========================================================= -->
 
-        <input
-          id="searchInput"
-          type="search"
-          placeholder="Search iPhone model, display, battery, cable..."
-          aria-label="Search products"
-        >
+<header class="header">
 
-        <button id="searchBtn">
-          Search
-        </button>
+  <a href="#" class="brand" onclick="showHome(); return false;">
 
-      </div>
+    <div class="logo-mark">
 
+      <svg viewBox="0 0 100 100">
+        <polygon
+          points="25,10 75,10 95,50 75,90 25,90 5,50"
+          fill="none"
+          stroke="#168447"
+          stroke-width="8"
+        />
 
-      <nav>
+        <circle cx="25" cy="10" r="7" fill="#168447"/>
+        <circle cx="75" cy="10" r="7" fill="#168447"/>
+        <circle cx="95" cy="50" r="7" fill="#168447"/>
+        <circle cx="75" cy="90" r="7" fill="#168447"/>
+        <circle cx="25" cy="90" r="7" fill="#168447"/>
+        <circle cx="5" cy="50" r="7" fill="#168447"/>
 
-        <a href="#iphone">iPhone</a>
-
-        <a href="#accessories">
-          Accessories
-        </a>
-
-        <a href="#tools">
-          Tools
-        </a>
-
-        <a href="#ipad">
-          iPad
-        </a>
-
-        <a href="#iwatch">
-          iWatch
-        </a>
-
-      </nav>
-
-
-      <button
-        class="cart-btn"
-        id="cartBtn"
-      >
-
-        🛒
-        <span>Cart</span>
-
-        <b id="cartCount">
-          0
-        </b>
-
-      </button>
-
-
-      <button
-        class="menu-btn"
-        id="menuBtn"
-      >
-        ☰
-      </button>
+        <path
+          d="M25 10 L75 90 M75 10 L25 90 M5 50 Q50 25 95 50"
+          fill="none"
+          stroke="#168447"
+          stroke-width="4"
+        />
+      </svg>
 
     </div>
 
-  </header>
-
-
-
-  <!-- ================= MAIN ================= -->
-
-  <main>
-
-
-    <!-- ================= HERO ================= -->
-
-    <section
-      class="hero"
-      id="home"
-    >
-
-      <div
-        class="hero-slider"
-        id="heroSlider"
-      >
-
-        <div class="hero-content">
-
-          <p class="eyebrow">
-            HEXA MOBILE SPARE
-          </p>
-
-          <h1>
-            iPhone spare parts.
-            <br>
-
-            <span>
-              Made easy to find.
-            </span>
-
-          </h1>
-
-          <p>
-            Displays, batteries, back glass,
-            housing, cameras, charging flex
-            and more.
-          </p>
-
-
-          <div class="hero-actions">
-
-            <a
-              class="btn primary"
-              href="#iphone"
-            >
-              Shop iPhone Parts
-            </a>
-
-
-            <a
-              class="btn ghost"
-              href="#accessories"
-            >
-              View Accessories
-            </a>
-
-          </div>
-
-
-          <div class="shipping-note">
-
-            🚚 Shipping all over India
-
-          </div>
-
-        </div>
-
-
-        <div class="hero-dots">
-
-          <button class="active"></button>
-
-          <button></button>
-
-          <button></button>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-
-    <!-- ================= TRUST STRIP ================= -->
-
-    <section class="trust-strip">
-
-      <div>
-        ✓ Model-wise catalogue
-      </div>
-
-      <div>
-        ✓ MRP & selling price
-      </div>
-
-      <div>
-        ✓ Secure checkout
-      </div>
-
-      <div>
-        ✓ UPI & COD
-      </div>
-
-    </section>
-
-
-
-    <!-- ================= IPHONE ================= -->
-
-    <section
-      class="section"
-      id="iphone"
-    >
-
-      <div class="section-heading">
-
-        <div>
-
-          <p class="eyebrow">
-            SPARE PARTS
-          </p>
-
-          <h2>
-            Choose your iPhone
-          </h2>
-
-          <p>
-            Select a model to see available parts.
-          </p>
-
-        </div>
-
-
-        <a
-          href="#allProducts"
-          class="text-link"
-        >
-          View all →
-        </a>
-
-      </div>
-
-
-      <div
-        class="model-grid"
-        id="iphoneModels"
-      ></div>
-
-    </section>
-
-
-
-    <!-- ================= IPHONE PARTS ================= -->
-
-    <section
-      class="section alt"
-      id="iphonePartsSection"
-      hidden
-    >
-
-      <div class="section-heading">
-
-        <div>
-
-          <p class="eyebrow">
-            MODEL
-          </p>
-
-          <h2 id="selectedModelTitle"></h2>
-
-          <p>
-            Choose the spare part you need.
-          </p>
-
-        </div>
-
-
-        <button
-          class="btn small"
-          id="backModels"
-        >
-          ← All models
-        </button>
-
-      </div>
-
-
-      <div
-        class="part-grid"
-        id="partGrid"
-      ></div>
-
-
-      <div
-        class="product-grid"
-        id="modelProducts"
-      ></div>
-
-    </section>
-
-
-
-    <!-- ================= ACCESSORIES ================= -->
-
-    <section
-      class="section"
-      id="accessories"
-    >
-
-      <div class="section-heading">
-
-        <div>
-
-          <p class="eyebrow">
-            ACCESSORIES
-          </p>
-
-          <h2>
-            Apple & Samsung
-          </h2>
-
-          <p>
-            Power adapters, cables and EarPods.
-          </p>
-
-        </div>
-
-      </div>
-
-
-      <div class="category-cards">
-
-        <button
-          class="category-card"
-          data-filter="Apple"
-        >
-
-          <span>
-            
-          </span>
-
-          <strong>
-            Apple
-          </strong>
-
-          <small>
-            Adapters • Cables • EarPods
-          </small>
-
-        </button>
-
-
-        <button
-          class="category-card"
-          data-filter="Samsung"
-        >
-
-          <span>
-            ▣
-          </span>
-
-          <strong>
-            Samsung
-          </strong>
-
-          <small>
-            25W • 60W • 65W • Cables
-          </small>
-
-        </button>
-
-      </div>
-
-
-      <div
-        class="product-grid"
-        id="accessoryProducts"
-      ></div>
-
-    </section>
-
-
-
-    <!-- ================= TOOLS ================= -->
-
-    <section
-      class="section alt"
-      id="tools"
-    >
-
-      <div class="section-heading">
-
-        <div>
-
-          <p class="eyebrow">
-            TOOLS
-          </p>
-
-          <h2>
-            Repair tools
-          </h2>
-
-          <p>
-            Professional tools for technicians.
-          </p>
-
-        </div>
-
-      </div>
-
-
-      <div
-        class="product-grid"
-        id="toolProducts"
-      ></div>
-
-    </section>
-
-
-
-    <!-- ================= IPAD ================= -->
-
-    <section
-      class="section"
-      id="ipad"
-    >
-
-      <div class="section-heading">
-
-        <div>
-
-          <p class="eyebrow">
-            TABLETS
-          </p>
-
-          <h2>
-            iPad spare parts
-          </h2>
-
-          <p>
-            Displays, batteries, touch and home button.
-          </p>
-
-        </div>
-
-      </div>
-
-
-      <div
-        class="product-grid"
-        id="ipadProducts"
-      ></div>
-
-    </section>
-
-
-
-    <!-- ================= IWATCH ================= -->
-
-    <section
-      class="section alt"
-      id="iwatch"
-    >
-
-      <div class="section-heading">
-
-        <div>
-
-          <p class="eyebrow">
-            APPLE WATCH
-          </p>
-
-          <h2>
-            iWatch spare parts
-          </h2>
-
-          <p>
-            Battery, touch and OCA glass.
-          </p>
-
-        </div>
-
-      </div>
-
-
-      <div
-        class="product-grid"
-        id="iwatchProducts"
-      ></div>
-
-    </section>
-
-
-
-    <!-- ================= ALL PRODUCTS ================= -->
-
-    <section
-      class="section"
-      id="allProducts"
-    >
-
-      <div class="section-heading">
-
-        <div>
-
-          <p class="eyebrow">
-            CATALOGUE
-          </p>
-
-          <h2>
-            Featured products
-          </h2>
-
-          <p>
-            Demo catalogue — prices and stock are sample data.
-          </p>
-
-        </div>
-
-      </div>
-
-
-      <div
-        class="product-grid"
-        id="featuredProducts"
-      ></div>
-
-    </section>
-
-  </main>
-
-
-
-  <!-- ================= FOOTER ================= -->
-
-  <footer>
-
-    <div class="container footer-grid">
-
-      <div>
-
-        <div class="footer-brand">
-          HEXA
-          <span>
-            Mobile Spare
-          </span>
-        </div>
-
-        <p>
-          iPhone spare parts, accessories,
-          tools, iPad and iWatch parts.
-        </p>
-
-      </div>
-
-
-      <div>
-
-        <h4>
-          Shop
-        </h4>
-
-        <a href="#iphone">
-          iPhone
-        </a>
-
-        <a href="#accessories">
-          Accessories
-        </a>
-
-        <a href="#tools">
-          Tools
-        </a>
-
-        <a href="#ipad">
-          iPad
-        </a>
-
-      </div>
-
-
-      <div>
-
-        <h4>
-          Customer
-        </h4>
-
-        <a
-          href="#"
-          id="loginFooter"
-        >
-          Login
-        </a>
-
-        <a
-          href="#cart"
-          id="ordersFooter"
-        >
-          My Orders
-        </a>
-
-        <a href="#">
-          Shipping
-        </a>
-
-      </div>
-
-
-      <div>
-
-        <h4>
-          Delivery
-        </h4>
-
-        <p>
-          Shipping all over India.
-        </p>
-
-        <p>
-          UPI & Cash on Delivery.
-        </p>
-
-      </div>
-
+    <div class="brand-text">
+      <strong>HEXA</strong>
+      <span>MOBILE SPARE</span>
     </div>
 
-
-    <div class="copyright">
-
-      © 2026 HEXA Mobile Spare.
-      Demo customer website.
-
-    </div>
-
-  </footer>
+  </a>
 
 
+  <div class="search-box">
 
-  <!-- ================= OVERLAY ================= -->
+    <input
+      id="searchInput"
+      type="search"
+      placeholder="Search iPhone parts, batteries, displays..."
+      oninput="searchProducts(this.value)"
+    >
 
-  <div
-    class="overlay"
-    id="overlay"
-  ></div>
+    <button onclick="searchProducts(document.getElementById('searchInput').value)">
+      🔍
+    </button>
 
-
-
-  <!-- ================= CART DRAWER ================= -->
-
-  <aside
-    class="drawer cart-drawer"
-    id="cartDrawer"
-  >
-
-    <div class="drawer-head">
-
-      <h3>
-        Your Cart
-      </h3>
-
-      <button
-        class="close"
-        data-close
-      >
-        ×
-      </button>
-
-    </div>
+  </div>
 
 
-    <div
-      id="cartItems"
-      class="cart-items"
-    ></div>
+  <div class="header-actions">
+
+    <button class="header-btn" onclick="openLogin()">
+      👤
+      <span>Account</span>
+    </button>
+
+    <button class="cart-btn" onclick="openCart()">
+      🛒
+      <span>Cart</span>
+      <b id="cartCount">0</b>
+    </button>
+
+  </div>
+
+</header>
 
 
-    <div class="cart-summary">
+<!-- =========================================================
+     NAVIGATION
+========================================================= -->
 
-      <div>
+<nav class="navbar">
 
-        <span>
-          Subtotal
-        </span>
+  <div class="nav-inner">
 
-        <strong id="cartTotal">
-          ₹0
-        </strong>
+    <button onclick="showHome()">HOME</button>
 
+    <button onclick="openCategory('iphone')">
+      iPHONE
+    </button>
+
+    <button onclick="openCategory('accessories')">
+      ACCESSORIES
+    </button>
+
+    <button onclick="openCategory('tools')">
+      TOOLS
+    </button>
+
+    <button onclick="openCategory('ipad')">
+      iPAD
+    </button>
+
+    <button onclick="openCategory('watch')">
+      APPLE WATCH
+    </button>
+
+    <button onclick="openOrders()">
+      MY ORDERS
+    </button>
+
+  </div>
+
+</nav>
+
+
+<!-- =========================================================
+     MAIN APP
+========================================================= -->
+
+<main id="app">
+
+  <!-- HOME PAGE WILL BE GENERATED BY JAVASCRIPT -->
+
+</main>
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer class="footer">
+
+  <div class="footer-grid">
+
+    <div>
+
+      <div class="footer-logo">
+        HEXA
       </div>
 
       <p>
-        Shipping calculated at checkout.
+        iPhone spare parts & accessories
       </p>
 
-
-      <button
-        class="btn primary full"
-        id="checkoutBtn"
-      >
-        Proceed to Checkout
-      </button>
+      <p>
+        Professional parts for mobile technicians
+        and repair shops.
+      </p>
 
     </div>
 
-  </aside>
 
+    <div>
 
+      <h3>Quick Links</h3>
 
-  <!-- ================= PRODUCT MODAL ================= -->
-
-  <div
-    class="modal"
-    id="productModal"
-  >
-
-    <div class="modal-card product-modal">
-
-      <button
-        class="close"
-        data-close
-      >
-        ×
-      </button>
-
-
-      <div id="productDetail"></div>
+      <button onclick="showHome()">Home</button>
+      <button onclick="openCategory('iphone')">iPhone Parts</button>
+      <button onclick="openCategory('accessories')">Accessories</button>
+      <button onclick="openCategory('tools')">Tools</button>
 
     </div>
 
-  </div>
+
+    <div>
+
+      <h3>Categories</h3>
+
+      <button onclick="openCategory('ipad')">iPad</button>
+      <button onclick="openCategory('watch')">Apple Watch</button>
+      <button onclick="openCategory('iphone')">Displays</button>
+      <button onclick="openCategory('iphone')">Batteries</button>
+
+    </div>
 
 
+    <div>
 
-  <!-- ================= LOGIN MODAL ================= -->
+      <h3>Customer Support</h3>
 
-  <div
-    class="modal"
-    id="loginModal"
-  >
-
-    <div class="modal-card auth-card">
-
-      <button
-        class="close"
-        data-close
-      >
-        ×
-      </button>
-
-
-      <p class="eyebrow">
-        HEXA ACCOUNT
-      </p>
-
-
-      <h2>
-        Sign in to continue
-      </h2>
-
-
-      <p class="muted">
-        Login is required before placing an order.
-      </p>
-
-
-      <button
-        class="google-btn"
-        id="googleLogin"
-      >
-        G Continue with Google
-      </button>
-
-
-      <div class="or">
-        <span>
-          OR
-        </span>
-      </div>
-
-
-      <input
-        id="mobileInput"
-        placeholder="+91 Mobile number"
-        inputmode="numeric"
-      >
-
-
-      <button
-        class="btn primary full"
-        id="mobileLogin"
-      >
-        Send OTP
-      </button>
-
-
-      <p class="tiny">
-        Demo login: this frontend does not send
-        a real OTP yet. Connect Firebase/Auth
-        in the production version.
-      </p>
+      <p>📦 All India Shipping</p>
+      <p>💳 UPI / COD</p>
+      <p>🔒 Secure Checkout</p>
+      <p>📞 Contact Support</p>
 
     </div>
 
   </div>
 
 
+  <div class="footer-bottom">
 
-  <!-- ================= CHECKOUT MODAL ================= -->
-
-  <div
-    class="modal"
-    id="checkoutModal"
-  >
-
-    <div class="modal-card checkout-card">
-
-      <button
-        class="close"
-        data-close
-      >
-        ×
-      </button>
-
-
-      <p class="eyebrow">
-        CHECKOUT
-      </p>
-
-
-      <h2>
-        Delivery details
-      </h2>
-
-
-      <form id="checkoutForm">
-
-        <input
-          required
-          id="name"
-          placeholder="Full name"
-        >
-
-
-        <input
-          required
-          id="phone"
-          placeholder="Mobile number"
-          inputmode="numeric"
-        >
-
-
-        <input
-          required
-          id="email"
-          type="email"
-          placeholder="Email"
-        >
-
-
-        <textarea
-          required
-          id="address"
-          placeholder="Full delivery address"
-        ></textarea>
-
-
-        <div class="two">
-
-          <input
-            required
-            id="city"
-            placeholder="City"
-          >
-
-          <input
-            required
-            id="pin"
-            placeholder="PIN code"
-            inputmode="numeric"
-          >
-
-        </div>
-
-
-        <h4>
-          Payment method
-        </h4>
-
-
-        <label class="pay-option">
-
-          <input
-            type="radio"
-            name="payment"
-            value="UPI"
-            checked
-          >
-
-          UPI / Online payment
-
-        </label>
-
-
-        <label class="pay-option">
-
-          <input
-            type="radio"
-            name="payment"
-            value="COD"
-          >
-
-          Cash on Delivery
-
-        </label>
-
-
-        <div class="checkout-total">
-
-          Total
-
-          <strong id="checkoutTotal">
-            ₹0
-          </strong>
-
-        </div>
-
-
-        <button
-          class="btn primary full"
-          type="submit"
-        >
-          Place Demo Order
-        </button>
-
-      </form>
-
-    </div>
+    © 2026 HEXA Mobile Spare.
+    All rights reserved.
 
   </div>
 
+</footer>
 
 
-  <!-- ================= ORDER MODAL ================= -->
+<!-- =========================================================
+     LOGIN MODAL
+========================================================= -->
 
-  <div
-    class="modal"
-    id="orderModal"
-  >
+<div id="loginModal" class="modal">
 
-    <div class="modal-card order-card">
+  <div class="modal-box">
 
-      <button
-        class="close"
-        data-close
-      >
-        ×
-      </button>
+    <button class="close" onclick="closeLogin()">×</button>
 
-
-      <div class="success-icon">
-        ✓
-      </div>
-
-
-      <p class="eyebrow">
-        ORDER PLACED
-      </p>
-
-
-      <h2>
-        Thank you!
-      </h2>
-
-
-      <p id="orderMessage"></p>
-
-
-      <div class="status-line">
-
-        <span class="done">
-          Order Placed
-        </span>
-
-        <span>
-          Confirmed
-        </span>
-
-        <span>
-          Processing
-        </span>
-
-        <span>
-          Shipped
-        </span>
-
-        <span>
-          Delivered
-        </span>
-
-      </div>
-
-
-      <button
-        class="btn primary full"
-        data-close
-      >
-        Continue Shopping
-      </button>
-
+    <div class="login-logo">
+      HEXA
     </div>
+
+    <h2>Sign in to HEXA</h2>
+
+    <p class="muted">
+      Login is required before placing an order.
+    </p>
+
+
+    <button class="google-btn" onclick="loginGoogle()">
+      <span>G</span>
+      Continue with Google
+    </button>
+
+
+    <div class="or">
+      <span>OR</span>
+    </div>
+
+
+    <input
+      id="mobileLogin"
+      class="modal-input"
+      type="tel"
+      maxlength="10"
+      placeholder="Enter mobile number"
+    >
+
+    <button
+      class="primary-btn full"
+      onclick="loginMobile()"
+    >
+      Continue with Mobile
+    </button>
 
   </div>
 
+</div>
 
 
-  <!-- ================= JAVASCRIPT ================= -->
+<!-- =========================================================
+     CART MODAL
+========================================================= -->
 
-  <script src="data.js"></script>
+<div id="cartModal" class="modal">
 
-  <script src="app.js"></script>
+  <div class="modal-box cart-modal">
+
+    <button class="close" onclick="closeCart()">×</button>
+
+    <h2>Your Cart</h2>
+
+    <div id="cartItems"></div>
+
+    <div id="cartSummary"></div>
+
+  </div>
+
+</div>
+
+
+<!-- =========================================================
+     CHECKOUT MODAL
+========================================================= -->
+
+<div id="checkoutModal" class="modal">
+
+  <div class="modal-box checkout-box">
+
+    <button class="close" onclick="closeCheckout()">×</button>
+
+    <h2>Checkout</h2>
+
+    <div id="checkoutContent"></div>
+
+  </div>
+
+</div>
+
+
+<!-- =========================================================
+     PRODUCT MODAL
+========================================================= -->
+
+<div id="productModal" class="modal">
+
+  <div class="modal-box product-modal">
+
+    <button class="close" onclick="closeProduct()">×</button>
+
+    <div id="productDetails"></div>
+
+  </div>
+
+</div>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script src="data.js"></script>
+<script src="app.js"></script>
 
 </body>
 </html>
