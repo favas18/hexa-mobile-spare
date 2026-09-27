@@ -1,205 +1,292 @@
 /* =========================================================
    HEXA MOBILE SPARE
-   CUSTOMER WEBSITE LOGIC
+   CUSTOMER WEBSITE
    ========================================================= */
-
-const iphoneModelsContainer =
-  document.getElementById("iphoneModels");
-
-const partGrid =
-  document.getElementById("partGrid");
-
-const modelProducts =
-  document.getElementById("modelProducts");
-
 
 let selectedModel = null;
 
+let cart = JSON.parse(localStorage.getItem("hexaCart")) || [];
+
 
 /* =========================================================
-   SHOW IPHONE MODELS
+   PAGE START
+   ========================================================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    renderIphoneModels();
+
+    setupSearch();
+
+    updateCartCount();
+
+});
+
+
+/* =========================================================
+   IPHONE MODEL CARDS
    ========================================================= */
 
 function renderIphoneModels() {
 
-  if (!iphoneModelsContainer) return;
+    const container =
+        document.getElementById("iphoneModels");
 
-  iphoneModelsContainer.innerHTML = "";
+    if (!container) return;
 
-  iphoneModels.forEach(model => {
+    container.innerHTML = "";
 
-    const card = document.createElement("button");
+    iphoneModels.forEach((model, index) => {
 
-    card.className = "model-card";
+        /*
+        IMPORTANT:
+        model is an OBJECT.
+        We use model.name instead of model.
+        */
 
-    card.innerHTML = `
-      <div class="model-phone">
-        <div class="phone-camera"></div>
-      </div>
+        const card =
+            document.createElement("div");
 
-      <strong>${model.name}</strong>
+        card.className = "model-card";
 
-      <span>View spare parts</span>
-    `;
+        card.innerHTML = `
 
-    card.addEventListener("click", () => {
+            <div class="phone-visual">
 
-      selectedModel = model;
+                <div class="phone-body">
 
-      renderParts(model);
+                    <div class="phone-screen">
 
-      document
-        .getElementById("modelProducts")
-        ?.scrollIntoView({
-          behavior: "smooth"
-        });
+                        <div class="screen-glow"></div>
+
+                    </div>
+
+                    <div class="dynamic-island"></div>
+
+                    <div class="camera-system">
+
+                        <span></span>
+                        <span></span>
+                        <span></span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="model-info">
+
+                <h3>${model.name}</h3>
+
+                <p>
+                    ${model.parts.length} spare parts
+                </p>
+
+                <button
+                    onclick="selectModel(${index})"
+                >
+                    View Spare Parts
+                    <span>→</span>
+                </button>
+
+            </div>
+
+        `;
+
+        container.appendChild(card);
 
     });
-
-    iphoneModelsContainer.appendChild(card);
-
-  });
 
 }
 
 
 /* =========================================================
-   SHOW ONLY ONE OF EACH PART
+   SELECT IPHONE MODEL
+   ========================================================= */
+
+function selectModel(index) {
+
+    selectedModel = iphoneModels[index];
+
+    const title =
+        document.getElementById("selectedModelTitle");
+
+    if (title) {
+
+        title.textContent =
+            selectedModel.name;
+
+    }
+
+    renderParts(selectedModel);
+
+    const section =
+        document.getElementById("modelProducts");
+
+    if (section) {
+
+        section.scrollIntoView({
+            behavior: "smooth"
+        });
+
+    }
+
+}
+
+
+/* =========================================================
+   SHOW PARTS
    ========================================================= */
 
 function renderParts(model) {
 
-  if (!partGrid) return;
+    const grid =
+        document.getElementById("partGrid");
 
-  partGrid.innerHTML = "";
+    if (!grid) return;
 
-  /*
-    Safety protection:
-    remove duplicate part names.
-  */
+    grid.innerHTML = "";
 
-  const uniqueParts = [];
+    /*
+    Remove duplicate parts.
+    Each part appears ONLY ONCE.
+    */
 
-  model.parts.forEach(product => {
+    const uniqueParts = [];
 
-    const alreadyExists =
-      uniqueParts.some(
-        item =>
-          item.name.toLowerCase() ===
-          product.name.toLowerCase()
-      );
+    model.parts.forEach(part => {
 
-    if (!alreadyExists) {
+        const exists =
+            uniqueParts.some(
+                item =>
+                    item.name.toLowerCase() ===
+                    part.name.toLowerCase()
+            );
 
-      uniqueParts.push(product);
+        if (!exists) {
 
-    }
+            uniqueParts.push(part);
 
-  });
+        }
 
-
-  uniqueParts.forEach(product => {
-
-    const card =
-      document.createElement("div");
-
-    card.className = "product-card";
-
-    const discount =
-      Math.round(
-        ((product.mrp - product.price) /
-          product.mrp) * 100
-      );
+    });
 
 
-    card.innerHTML = `
+    uniqueParts.forEach(part => {
 
-      <div class="product-image">
+        const card =
+            document.createElement("div");
 
-        <div class="spare-icon">
-          ${getPartIcon(product.name)}
-        </div>
-
-      </div>
-
-      <div class="product-info">
-
-        <div class="product-category">
-          ${selectedModel.name}
-        </div>
-
-        <h3>${product.name}</h3>
-
-        <div class="price-row">
-
-          <span class="price">
-            ₹${product.price.toLocaleString("en-IN")}
-          </span>
-
-          <span class="mrp">
-            ₹${product.mrp.toLocaleString("en-IN")}
-          </span>
-
-        </div>
-
-        <span class="discount">
-          ${discount}% OFF
-        </span>
-
-        <span class="stock">
-          ${product.stock} in stock
-        </span>
-
-        <button
-          class="view-product"
-          onclick="openProduct('${product.id}')"
-        >
-          View Product
-        </button>
-
-      </div>
-
-    `;
+        card.className =
+            "part-product-card";
 
 
-    partGrid.appendChild(card);
+        const discount =
+            Math.round(
+                ((part.mrp - part.price) /
+                    part.mrp) * 100
+            );
 
-  });
+
+        card.innerHTML = `
+
+            <div class="part-image">
+
+                <div class="part-icon">
+
+                    ${getPartIcon(part.name)}
+
+                </div>
+
+            </div>
+
+            <div class="part-content">
+
+                <small>
+                    ${model.name}
+                </small>
+
+                <h3>
+                    ${part.name}
+                </h3>
+
+                <div class="price-line">
+
+                    <strong>
+                        ₹${part.price.toLocaleString("en-IN")}
+                    </strong>
+
+                    <del>
+                        ₹${part.mrp.toLocaleString("en-IN")}
+                    </del>
+
+                </div>
+
+                <span class="discount-badge">
+                    ${discount}% OFF
+                </span>
+
+                <div class="stock-text">
+
+                    ${part.stock > 0
+                        ? "● In Stock"
+                        : "● Out of Stock"
+                    }
+
+                </div>
+
+                <button
+                    class="part-button"
+                    onclick="openProduct('${part.id}')"
+                >
+
+                    View Details
+
+                </button>
+
+            </div>
+
+        `;
+
+        grid.appendChild(card);
+
+    });
 
 }
 
 
 /* =========================================================
-   PRODUCT ICON
+   PART ICONS
    ========================================================= */
 
 function getPartIcon(part) {
 
-  const icons = {
+    const icons = {
 
-    "Display": "▣",
+        "Display": "▣",
 
-    "Battery": "▰",
+        "Battery": "▰",
 
-    "Back Glass": "◇",
+        "Back Glass": "◇",
 
-    "Ringer": "◉",
+        "Ringer": "◉",
 
-    "Earpiece": "◌",
+        "Earpiece": "◌",
 
-    "Charging Flex": "⌁",
+        "Charging Flex": "⌁",
 
-    "Front Camera": "◉",
+        "Front Camera": "◉",
 
-    "Back Camera": "◎",
+        "Back Camera": "◎",
 
-    "Battery Cells": "▤",
+        "Battery Cells": "▤",
 
-    "Housing": "▱"
+        "Housing": "▱"
 
-  };
+    };
 
-  return icons[part] || "●";
+    return icons[part] || "●";
 
 }
 
@@ -210,189 +297,136 @@ function getPartIcon(part) {
 
 function openProduct(productId) {
 
-  if (!selectedModel) return;
+    if (!selectedModel) return;
 
-  const product =
-    selectedModel.parts.find(
-      item => item.id === productId
-    );
+    const product =
+        selectedModel.parts.find(
+            item => item.id === productId
+        );
 
-  if (!product) return;
-
-
-  /*
-    BACK GLASS
-    */
-
-  if (product.name === "Back Glass") {
-
-    showColorProducts(
-      product,
-      "Back Glass"
-    );
-
-    return;
-
-  }
+    if (!product) return;
 
 
-  /*
-    HOUSING
-    */
+    /* BACK GLASS */
 
-  if (product.name === "Housing") {
+    if (product.name === "Back Glass") {
 
-    showColorProducts(
-      product,
-      "Housing"
-    );
+        showColourProducts(
+            product,
+            "Back Glass"
+        );
 
-    return;
+        return;
 
-  }
+    }
 
 
-  showNormalProduct(product);
+    /* HOUSING */
+
+    if (product.name === "Housing") {
+
+        showColourProducts(
+            product,
+            "Housing"
+        );
+
+        return;
+
+    }
+
+
+    showNormalProduct(product);
 
 }
 
 
 /* =========================================================
-   COLOUR PRODUCTS
+   BACK GLASS / HOUSING COLOURS
    ========================================================= */
 
-function showColorProducts(product, title) {
+function showColourProducts(product, title) {
 
-  const colors =
-    product.colors || [];
+    const colors =
+        product.colors || [];
 
 
-  const colorHTML =
-    colors.map(color => {
+    let html = `
 
-      return `
+        <div class="modal-product">
 
-        <div class="color-product">
+            <button
+                class="modal-close"
+                onclick="closeModal()"
+            >
+                ×
+            </button>
 
-          <div
-            class="color-circle"
-            style="
-              background:
-              ${getColorCode(color.name)};
-            "
-          ></div>
+            <span class="modal-category">
+                ${selectedModel.name}
+            </span>
 
-          <div>
+            <h2>
+                ${title}
+            </h2>
 
-            <strong>
-              ${selectedModel.name}
-            </strong>
+            <p class="modal-subtitle">
+                Select colour
+            </p>
 
-            <p>${title} — ${color.name}</p>
+            <div class="colour-grid">
 
-          </div>
+    `;
 
-          <button
-            onclick="
-              addColorToCart(
-                '${product.id}',
-                '${color.name}'
-              )
-            "
-          >
-            Add
-          </button>
+
+    colors.forEach(color => {
+
+        html += `
+
+            <div class="colour-card">
+
+                <div
+                    class="colour-circle"
+                    style="
+                        background:${getColourCode(
+                            color.name
+                        )};
+                    "
+                ></div>
+
+                <div class="colour-name">
+
+                    ${color.name}
+
+                </div>
+
+                <button
+                    onclick="
+                        addColourToCart(
+                            '${product.id}',
+                            '${escapeText(color.name)}'
+                        )
+                    "
+                >
+                    Add to Cart
+                </button>
+
+            </div>
+
+        `;
+
+    });
+
+
+    html += `
+
+            </div>
 
         </div>
 
-      `;
-
-    }).join("");
+    `;
 
 
-  openModal(`
-
-    <div class="product-modal">
-
-      <button
-        class="close-modal"
-        onclick="closeModal()"
-      >
-        ×
-      </button>
-
-      <div class="modal-label">
-        ${selectedModel.name}
-      </div>
-
-      <h2>${title}</h2>
-
-      <p class="modal-description">
-        Available colours for
-        ${selectedModel.name}
-      </p>
-
-      <div class="color-list">
-
-        ${colorHTML}
-
-      </div>
-
-    </div>
-
-  `);
-
-}
-
-
-/* =========================================================
-   COLOUR PREVIEW
-   ========================================================= */
-
-function getColorCode(color) {
-
-  const colors = {
-
-    "Jet Black": "#111111",
-    "Black": "#111111",
-    "Space Black": "#181818",
-    "Space Gray": "#777777",
-    "Silver": "#d8d8d8",
-    "White": "#f5f5f5",
-    "Gold": "#d8bd8c",
-    "Rose Gold": "#e5b7aa",
-    "Pink": "#f3b6c2",
-    "Blue": "#477ca8",
-    "Midnight": "#202a32",
-    "Starlight": "#eee5d5",
-    "Green": "#71836d",
-    "Purple": "#7c688a",
-    "Yellow": "#e7d24c",
-    "Coral": "#ff806f",
-    "(PRODUCT)RED": "#b32026",
-    "Midnight Green": "#53615b",
-    "Graphite": "#505050",
-    "Pacific Blue": "#4c6478",
-    "Sierra Blue": "#9aaec4",
-    "Alpine Green": "#52655b",
-    "Deep Purple": "#40354f",
-    "Black Titanium": "#3c3c3b",
-    "White Titanium": "#e5e5e0",
-    "Blue Titanium": "#4d5968",
-    "Natural Titanium": "#9b988f",
-    "Desert Titanium": "#b6a18b",
-    "Teal": "#6d9d98",
-    "Ultramarine": "#465f9d",
-    "Mist Blue": "#aebfc8",
-    "Sage": "#9aa88e",
-    "Lavender": "#b8a9c8",
-    "Cosmic Orange": "#c76b38",
-    "Deep Blue": "#314b70"
-
-  };
-
-
-  return colors[color] || "#999";
+    openModal(html);
 
 }
 
@@ -403,60 +437,331 @@ function getColorCode(color) {
 
 function showNormalProduct(product) {
 
-  const discount =
-    Math.round(
-      ((product.mrp - product.price) /
-        product.mrp) * 100
+    const discount =
+        Math.round(
+            ((product.mrp - product.price) /
+                product.mrp) * 100
+        );
+
+
+    const html = `
+
+        <div class="modal-product">
+
+            <button
+                class="modal-close"
+                onclick="closeModal()"
+            >
+                ×
+            </button>
+
+            <span class="modal-category">
+
+                ${selectedModel.name}
+
+            </span>
+
+            <h2>
+
+                ${product.name}
+
+            </h2>
+
+            <div class="modal-price">
+
+                ₹${product.price.toLocaleString("en-IN")}
+
+            </div>
+
+            <div class="modal-mrp">
+
+                MRP:
+                <del>
+                    ₹${product.mrp.toLocaleString("en-IN")}
+                </del>
+
+            </div>
+
+            <span class="discount-badge">
+
+                ${discount}% OFF
+
+            </span>
+
+            <div class="modal-stock">
+
+                ${product.stock > 0
+                    ? "✓ Available"
+                    : "Out of Stock"
+                }
+
+            </div>
+
+            <button
+                class="modal-cart-button"
+                onclick="
+                    addToCart('${product.id}')
+                "
+            >
+
+                Add to Cart
+
+            </button>
+
+        </div>
+
+    `;
+
+
+    openModal(html);
+
+}
+
+
+/* =========================================================
+   COLOUR CODE
+   ========================================================= */
+
+function getColourCode(color) {
+
+    const colors = {
+
+        "Jet Black": "#111111",
+
+        "Black": "#111111",
+
+        "Space Black": "#181818",
+
+        "Space Gray": "#777777",
+
+        "Silver": "#d8d8d8",
+
+        "White": "#f5f5f5",
+
+        "Gold": "#d9bd8a",
+
+        "Rose Gold": "#e5b7aa",
+
+        "Pink": "#efb8c5",
+
+        "Blue": "#477ca8",
+
+        "Midnight": "#202a32",
+
+        "Starlight": "#eee5d5",
+
+        "Green": "#71836d",
+
+        "Purple": "#7d698c",
+
+        "Yellow": "#e6d24d",
+
+        "Coral": "#ff806f",
+
+        "(PRODUCT)RED": "#b82027",
+
+        "Midnight Green": "#53615b",
+
+        "Graphite": "#505050",
+
+        "Pacific Blue": "#4d667c",
+
+        "Sierra Blue": "#9eafc1",
+
+        "Alpine Green": "#52645a",
+
+        "Deep Purple": "#40364f",
+
+        "Black Titanium": "#3d3d3b",
+
+        "White Titanium": "#e5e4df",
+
+        "Blue Titanium": "#4f5c6b",
+
+        "Natural Titanium": "#9d9a90",
+
+        "Desert Titanium": "#b5a08a",
+
+        "Teal": "#6e9d98",
+
+        "Ultramarine": "#465f9c",
+
+        "Mist Blue": "#afc1ca",
+
+        "Sage": "#99a78d",
+
+        "Lavender": "#b8a9c8",
+
+        "Cosmic Orange": "#c76b38",
+
+        "Deep Blue": "#314b70"
+
+    };
+
+    return colors[color] || "#999999";
+
+}
+
+
+/* =========================================================
+   CART
+   ========================================================= */
+
+function addToCart(productId) {
+
+    if (!selectedModel) return;
+
+    const product =
+        selectedModel.parts.find(
+            item => item.id === productId
+        );
+
+    if (!product) return;
+
+
+    const existing =
+        cart.find(
+            item => item.id === product.id
+        );
+
+
+    if (existing) {
+
+        existing.quantity += 1;
+
+    } else {
+
+        cart.push({
+
+            id: product.id,
+
+            model: selectedModel.name,
+
+            name: product.name,
+
+            price: product.price,
+
+            quantity: 1
+
+        });
+
+    }
+
+
+    saveCart();
+
+    closeModal();
+
+    showToast(
+        `${product.name} added to cart`
     );
 
+}
 
-  openModal(`
 
-    <div class="product-modal">
+/* =========================================================
+   COLOUR CART
+   ========================================================= */
 
-      <button
-        class="close-modal"
-        onclick="closeModal()"
-      >
-        ×
-      </button>
+function addColourToCart(
+    productId,
+    colour
+) {
 
-      <div class="modal-label">
-        ${selectedModel.name}
-      </div>
+    if (!selectedModel) return;
 
-      <h2>${product.name}</h2>
+    const product =
+        selectedModel.parts.find(
+            item => item.id === productId
+        );
 
-      <div class="modal-price">
-        ₹${product.price.toLocaleString("en-IN")}
-      </div>
+    if (!product) return;
 
-      <div class="modal-mrp">
-        MRP
-        ₹${product.mrp.toLocaleString("en-IN")}
-      </div>
 
-      <span class="discount">
-        ${discount}% OFF
-      </span>
+    const cartId =
+        `${product.id}-${colour}`;
 
-      <p>
-        Stock available:
-        <strong>${product.stock}</strong>
-      </p>
 
-      <button
-        class="add-cart"
-        onclick="
-          addToCart('${product.id}')
-        "
-      >
-        Add to Cart
-      </button>
+    const existing =
+        cart.find(
+            item => item.id === cartId
+        );
 
-    </div>
 
-  `);
+    if (existing) {
+
+        existing.quantity += 1;
+
+    } else {
+
+        cart.push({
+
+            id: cartId,
+
+            model:
+                selectedModel.name,
+
+            name:
+                `${product.name} - ${colour}`,
+
+            price:
+                product.price,
+
+            quantity: 1
+
+        });
+
+    }
+
+
+    saveCart();
+
+    closeModal();
+
+    showToast(
+        `${product.name} - ${colour} added`
+    );
+
+}
+
+
+/* =========================================================
+   SAVE CART
+   ========================================================= */
+
+function saveCart() {
+
+    localStorage.setItem(
+        "hexaCart",
+        JSON.stringify(cart)
+    );
+
+    updateCartCount();
+
+}
+
+
+/* =========================================================
+   CART COUNT
+   ========================================================= */
+
+function updateCartCount() {
+
+    const count =
+        cart.reduce(
+            (total, item) =>
+                total + item.quantity,
+            0
+        );
+
+
+    document
+        .querySelectorAll(".cart-count")
+        .forEach(element => {
+
+            element.textContent = count;
+
+        });
 
 }
 
@@ -467,156 +772,151 @@ function showNormalProduct(product) {
 
 function openModal(content) {
 
-  let modal =
-    document.getElementById("hexaModal");
-
-  if (!modal) {
-
-    modal =
-      document.createElement("div");
-
-    modal.id = "hexaModal";
-
-    modal.className = "hexa-modal";
-
-    document.body.appendChild(modal);
-
-  }
+    let modal =
+        document.getElementById(
+            "hexaModal"
+        );
 
 
-  modal.innerHTML = content;
+    if (!modal) {
 
-  modal.classList.add("active");
+        modal =
+            document.createElement("div");
+
+        modal.id =
+            "hexaModal";
+
+        modal.className =
+            "hexa-modal";
+
+        document.body.appendChild(modal);
+
+    }
+
+
+    modal.innerHTML = content;
+
+    setTimeout(() => {
+
+        modal.classList.add("active");
+
+    }, 10);
 
 }
 
 
 function closeModal() {
 
-  const modal =
-    document.getElementById("hexaModal");
+    const modal =
+        document.getElementById(
+            "hexaModal"
+        );
 
-  if (modal) {
+    if (modal) {
 
-    modal.classList.remove("active");
+        modal.classList.remove(
+            "active"
+        );
 
-  }
-
-}
-
-
-/* =========================================================
-   CART
-   ========================================================= */
-
-let cart =
-  JSON.parse(
-    localStorage.getItem("hexaCart")
-  ) || [];
-
-
-function addToCart(productId) {
-
-  if (!selectedModel) return;
-
-  const product =
-    selectedModel.parts.find(
-      item => item.id === productId
-    );
-
-  if (!product) return;
-
-
-  cart.push({
-
-    id: product.id,
-
-    model: selectedModel.name,
-
-    name: product.name,
-
-    price: product.price,
-
-    quantity: 1
-
-  });
-
-
-  saveCart();
-
-  closeModal();
-
-  alert(
-    `${product.name} added to cart`
-  );
-
-}
-
-
-function addColorToCart(
-  productId,
-  color
-) {
-
-  if (!selectedModel) return;
-
-  const product =
-    selectedModel.parts.find(
-      item => item.id === productId
-    );
-
-  if (!product) return;
-
-
-  cart.push({
-
-    id:
-      `${product.id}-${color}`,
-
-    model:
-      selectedModel.name,
-
-    name:
-      `${product.name} - ${color}`,
-
-    price:
-      product.price,
-
-    quantity: 1
-
-  });
-
-
-  saveCart();
-
-  closeModal();
-
-  alert(
-    `${product.name} - ${color} added to cart`
-  );
-
-}
-
-
-function saveCart() {
-
-  localStorage.setItem(
-    "hexaCart",
-    JSON.stringify(cart)
-  );
+    }
 
 }
 
 
 /* =========================================================
-   START
+   SEARCH
    ========================================================= */
 
-document.addEventListener(
-  "DOMContentLoaded",
-  () => {
+function setupSearch() {
 
-    renderIphoneModels();
+    const search =
+        document.getElementById(
+            "searchInput"
+        );
 
-  }
-);
+    if (!search) return;
+
+
+    search.addEventListener(
+        "input",
+        function () {
+
+            const query =
+                this.value
+                    .toLowerCase()
+                    .trim();
+
+
+            document
+                .querySelectorAll(
+                    ".model-card"
+                )
+                .forEach(card => {
+
+                    const text =
+                        card.textContent
+                            .toLowerCase();
+
+                    card.style.display =
+                        text.includes(query)
+                            ? ""
+                            : "none";
+
+                });
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+
+function showToast(message) {
+
+    let toast =
+        document.getElementById(
+            "hexaToast"
+        );
+
+
+    if (!toast) {
+
+        toast =
+            document.createElement("div");
+
+        toast.id =
+            "hexaToast";
+
+        document.body.appendChild(toast);
+
+    }
+
+
+    toast.textContent = message;
+
+    toast.classList.add("show");
+
+
+    setTimeout(() => {
+
+        toast.classList.remove(
+            "show"
+        );
+
+    }, 2500);
+
+}
+
+
+/* =========================================================
+   SECURITY / TEXT
+   ========================================================= */
+
+function escapeText(text) {
+
+    return String(text)
+        .replace(/'/g, "\\'");
+}
