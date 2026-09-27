@@ -1,804 +1,346 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta charset="UTF-8">
+  <title>HEXA Mobile Spare | iPhone Spare Parts</title>
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+  <meta name="description"
+        content="HEXA Mobile Spare - iPhone, iPad, Apple Watch, Samsung accessories and professional repair tools.">
 
-    <title>
-        HEXA Mobile Spare | iPhone Spare Parts
-    </title>
-
-    <meta
-        name="description"
-        content="HEXA Mobile Spare - iPhone spare parts, Apple accessories, Samsung accessories and repair tools."
-    >
-
-    <link
-        rel="stylesheet"
-        href="style.css"
-    >
-
+  <link rel="stylesheet" href="style.css">
 </head>
-
 
 <body>
 
-
-<!-- =====================================================
+<!-- =========================================================
      TOP BAR
-====================================================== -->
+========================================================= -->
 
-<div class="top-bar">
-
-    <div>
-        🚚 All India Delivery
-    </div>
-
-    <div>
-        🔒 Secure Checkout
-    </div>
-
-    <div>
-        UPI & COD Available
-    </div>
-
+<div class="topbar">
+  <div>🚚 All India Delivery</div>
+  <div>🔐 Secure Checkout</div>
+  <div>💳 UPI & COD Available</div>
 </div>
 
 
-<!-- =====================================================
+<!-- =========================================================
      HEADER
-====================================================== -->
+========================================================= -->
 
 <header class="header">
 
-    <a
-        href="index.html"
-        class="logo"
+  <a href="#" class="brand" onclick="showHome(); return false;">
+
+    <div class="logo-mark">
+
+      <svg viewBox="0 0 100 100">
+        <polygon
+          points="25,10 75,10 95,50 75,90 25,90 5,50"
+          fill="none"
+          stroke="#168447"
+          stroke-width="8"
+        />
+
+        <circle cx="25" cy="10" r="7" fill="#168447"/>
+        <circle cx="75" cy="10" r="7" fill="#168447"/>
+        <circle cx="95" cy="50" r="7" fill="#168447"/>
+        <circle cx="75" cy="90" r="7" fill="#168447"/>
+        <circle cx="25" cy="90" r="7" fill="#168447"/>
+        <circle cx="5" cy="50" r="7" fill="#168447"/>
+
+        <path
+          d="M25 10 L75 90 M75 10 L25 90 M5 50 Q50 25 95 50"
+          fill="none"
+          stroke="#168447"
+          stroke-width="4"
+        />
+      </svg>
+
+    </div>
+
+    <div class="brand-text">
+      <strong>HEXA</strong>
+      <span>MOBILE SPARE</span>
+    </div>
+
+  </a>
+
+
+  <div class="search-box">
+
+    <input
+      id="searchInput"
+      type="search"
+      placeholder="Search iPhone parts, batteries, displays..."
+      oninput="searchProducts(this.value)"
     >
 
-        <div class="logo-symbol">
+    <button onclick="searchProducts(document.getElementById('searchInput').value)">
+      🔍
+    </button>
 
-            <span></span>
-            <span></span>
-            <span></span>
-
-        </div>
-
-        <div>
-
-            <strong>
-                HEXA
-            </strong>
-
-            <small>
-                MOBILE SPARE
-            </small>
-
-        </div>
-
-    </a>
+  </div>
 
 
-    <div class="search-box">
+  <div class="header-actions">
 
-        <input
-            id="searchInput"
-            type="search"
-            placeholder="Search iPhone parts, batteries, displays..."
-        >
+    <button class="header-btn" onclick="openLogin()">
+      👤
+      <span>Account</span>
+    </button>
 
-        <button>
-            🔍
-        </button>
+    <button class="cart-btn" onclick="openCart()">
+      🛒
+      <span>Cart</span>
+      <b id="cartCount">0</b>
+    </button>
 
-    </div>
-
-
-    <div class="header-actions">
-
-        <button>
-            👤
-            <span>Account</span>
-        </button>
-
-        <button>
-            🛒
-            <span>Cart</span>
-
-            <b
-                class="cart-count"
-            >
-                0
-            </b>
-
-        </button>
-
-    </div>
+  </div>
 
 </header>
 
 
-<!-- =====================================================
+<!-- =========================================================
      NAVIGATION
-====================================================== -->
+========================================================= -->
 
-<nav class="navigation">
+<nav class="navbar">
 
-    <a href="index.html">
-        HOME
-    </a>
+  <div class="nav-inner">
 
-    <a href="#iphone">
-        iPHONE
-    </a>
+    <button onclick="showHome()">HOME</button>
 
-    <a href="#accessories">
-        ACCESSORIES
-    </a>
+    <button onclick="openCategory('iphone')">
+      iPHONE
+    </button>
 
-    <a href="#tools">
-        TOOLS
-    </a>
+    <button onclick="openCategory('accessories')">
+      ACCESSORIES
+    </button>
 
-    <a href="#ipad">
-        iPAD
-    </a>
+    <button onclick="openCategory('tools')">
+      TOOLS
+    </button>
 
-    <a href="#watch">
-        APPLE WATCH
-    </a>
+    <button onclick="openCategory('ipad')">
+      iPAD
+    </button>
 
-    <a href="#">
-        MY ORDERS
-    </a>
+    <button onclick="openCategory('watch')">
+      APPLE WATCH
+    </button>
+
+    <button onclick="openOrders()">
+      MY ORDERS
+    </button>
+
+  </div>
 
 </nav>
 
 
-<!-- =====================================================
-     HERO BANNER
-====================================================== -->
+<!-- =========================================================
+     MAIN APP
+========================================================= -->
 
-<section class="hero">
+<main id="app">
 
-    <div class="hero-content">
+  <!-- HOME PAGE WILL BE GENERATED BY JAVASCRIPT -->
 
-        <div class="hero-tag">
-            HEXA MOBILE SPARE
-        </div>
+</main>
 
-        <h1>
 
-            Your Trusted
-            <span>
-                iPhone Spare Parts
-            </span>
-            Partner.
-
-        </h1>
-
-        <p>
-
-            Quality spare parts and accessories
-            for technicians, repair shops and
-            mobile professionals.
-
-        </p>
-
-
-        <div class="hero-buttons">
-
-            <a
-                href="#iphone"
-                class="primary-button"
-            >
-                Explore iPhone Parts
-                →
-            </a>
-
-            <a
-                href="#accessories"
-                class="secondary-button"
-            >
-                Accessories
-            </a>
-
-        </div>
-
-
-        <div class="hero-features">
-
-            <span>
-                ✓ Quality Parts
-            </span>
-
-            <span>
-                ✓ Competitive Pricing
-            </span>
-
-            <span>
-                ✓ All India Delivery
-            </span>
-
-        </div>
-
-    </div>
-
-
-    <div class="hero-visual">
-
-        <div class="hero-phone phone-one">
-
-            <div class="camera-bump">
-
-                <i></i>
-                <i></i>
-                <i></i>
-
-            </div>
-
-        </div>
-
-
-        <div class="hero-phone phone-two">
-
-            <div class="camera-bump">
-
-                <i></i>
-                <i></i>
-                <i></i>
-
-            </div>
-
-        </div>
-
-
-        <div class="hero-circle"></div>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     CATEGORY QUICK LINKS
-====================================================== -->
-
-<section class="categories">
-
-    <div class="category-title">
-
-        <span>
-            SHOP BY CATEGORY
-        </span>
-
-        <h2>
-            Everything Your Repair Shop Needs
-        </h2>
-
-    </div>
-
-
-    <div class="category-grid">
-
-        <a
-            href="#iphone"
-            class="category-card"
-        >
-
-            <div class="category-icon">
-                
-            </div>
-
-            <h3>
-                iPhone
-            </h3>
-
-            <p>
-                Displays, batteries,
-                back glass & more
-            </p>
-
-        </a>
-
-
-        <a
-            href="#accessories"
-            class="category-card"
-        >
-
-            <div class="category-icon">
-                ⚡
-            </div>
-
-            <h3>
-                Accessories
-            </h3>
-
-            <p>
-                Apple & Samsung
-            </p>
-
-        </a>
-
-
-        <a
-            href="#tools"
-            class="category-card"
-        >
-
-            <div class="category-icon">
-                🔧
-            </div>
-
-            <h3>
-                Repair Tools
-            </h3>
-
-            <p>
-                Professional tools
-            </p>
-
-        </a>
-
-
-        <a
-            href="#ipad"
-            class="category-card"
-        >
-
-            <div class="category-icon">
-                ▣
-            </div>
-
-            <h3>
-                iPad
-            </h3>
-
-            <p>
-                Displays, batteries
-                & touch
-            </p>
-
-        </a>
-
-
-        <a
-            href="#watch"
-            class="category-card"
-        >
-
-            <div class="category-icon">
-                ◉
-            </div>
-
-            <h3>
-                Apple Watch
-            </h3>
-
-            <p>
-                Battery, touch & OCA
-            </p>
-
-        </a>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     IPHONE
-====================================================== -->
-
-<section
-    id="iphone"
-    class="iphone-section"
->
-
-    <div class="section-heading">
-
-        <div>
-
-            <span>
-                IPHONE SPARE PARTS
-            </span>
-
-            <h2>
-                Choose Your iPhone
-            </h2>
-
-            <p>
-                Select a model to view available spare parts.
-            </p>
-
-        </div>
-
-    </div>
-
-
-    <div
-        id="iphoneModels"
-        class="model-grid"
-    >
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     SELECTED MODEL PARTS
-====================================================== -->
-
-<section
-    id="modelProducts"
-    class="parts-section"
->
-
-    <div class="section-heading">
-
-        <div>
-
-            <span>
-                SPARE PARTS
-            </span>
-
-            <h2
-                id="selectedModelTitle"
-            >
-                Select an iPhone Model
-            </h2>
-
-            <p>
-                Choose a model above to view its parts.
-            </p>
-
-        </div>
-
-    </div>
-
-
-    <div
-        id="partGrid"
-        class="parts-grid"
-    >
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     ACCESSORIES
-====================================================== -->
-
-<section
-    id="accessories"
-    class="general-section"
->
-
-    <div class="section-heading">
-
-        <span>
-            ACCESSORIES
-        </span>
-
-        <h2>
-            Apple & Samsung Accessories
-        </h2>
-
-    </div>
-
-
-    <div class="feature-cards">
-
-        <div class="feature-card">
-
-            <div class="feature-icon">
-                ⚡
-            </div>
-
-            <h3>
-                Apple Accessories
-            </h3>
-
-            <p>
-                20W Adapter · 30W Adapter
-                · USB-C Cable · Lightning Cable
-                · EarPods
-            </p>
-
-        </div>
-
-
-        <div class="feature-card">
-
-            <div class="feature-icon">
-                ⚡
-            </div>
-
-            <h3>
-                Samsung Accessories
-            </h3>
-
-            <p>
-                25W · 60W · 65W Adapters
-                and charging cables.
-            </p>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     TOOLS
-====================================================== -->
-
-<section
-    id="tools"
-    class="general-section light-section"
->
-
-    <div class="section-heading">
-
-        <span>
-            PROFESSIONAL TOOLS
-        </span>
-
-        <h2>
-            Repair Tools
-        </h2>
-
-    </div>
-
-
-    <div class="tool-banner">
-
-        <div>
-
-            <span>
-                HEXA TOOLS
-            </span>
-
-            <h2>
-                Falcon 530
-            </h2>
-
-            <p>
-                Professional repair equipment
-                for technicians.
-            </p>
-
-            <button>
-                View Product
-            </button>
-
-        </div>
-
-        <div class="tool-graphic">
-            🔧
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     IPAD
-====================================================== -->
-
-<section
-    id="ipad"
-    class="general-section"
->
-
-    <div class="section-heading">
-
-        <span>
-            IPAD SPARE PARTS
-        </span>
-
-        <h2>
-            iPad Parts
-        </h2>
-
-        <p>
-            Displays, batteries, touch and home button
-            parts for different iPad models.
-        </p>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     APPLE WATCH
-====================================================== -->
-
-<section
-    id="watch"
-    class="general-section light-section"
->
-
-    <div class="section-heading">
-
-        <span>
-            APPLE WATCH
-        </span>
-
-        <h2>
-            Apple Watch Spare Parts
-        </h2>
-
-        <p>
-            Battery, touch and OCA glass
-            for Apple Watch models.
-        </p>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     SHIPPING STRIP
-====================================================== -->
-
-<section class="shipping-strip">
-
-    <div>
-        🚚
-        <strong>
-            All India Delivery
-        </strong>
-    </div>
-
-    <div>
-        🔒
-        <strong>
-            Secure Checkout
-        </strong>
-    </div>
-
-    <div>
-        💳
-        <strong>
-            UPI & COD
-        </strong>
-    </div>
-
-    <div>
-        📦
-        <strong>
-            Quality Spare Parts
-        </strong>
-    </div>
-
-</section>
-
-
-<!-- =====================================================
+<!-- =========================================================
      FOOTER
-====================================================== -->
+========================================================= -->
 
-<footer>
+<footer class="footer">
 
-    <div class="footer-logo">
+  <div class="footer-grid">
 
-        <strong>
-            HEXA
-        </strong>
+    <div>
 
-        <small>
-            MOBILE SPARE
-        </small>
+      <div class="footer-logo">
+        HEXA
+      </div>
 
-        <p>
-            iPhone spare parts &
-            accessories.
-        </p>
+      <p>
+        iPhone spare parts & accessories
+      </p>
+
+      <p>
+        Professional parts for mobile technicians
+        and repair shops.
+      </p>
 
     </div>
 
 
     <div>
 
-        <h4>
-            Shop
-        </h4>
+      <h3>Quick Links</h3>
 
-        <a href="#iphone">
-            iPhone Parts
-        </a>
-
-        <a href="#accessories">
-            Accessories
-        </a>
-
-        <a href="#tools">
-            Tools
-        </a>
-
-        <a href="#ipad">
-            iPad
-        </a>
-
-        <a href="#watch">
-            Apple Watch
-        </a>
+      <button onclick="showHome()">Home</button>
+      <button onclick="openCategory('iphone')">iPhone Parts</button>
+      <button onclick="openCategory('accessories')">Accessories</button>
+      <button onclick="openCategory('tools')">Tools</button>
 
     </div>
 
 
     <div>
 
-        <h4>
-            Customer
-        </h4>
+      <h3>Categories</h3>
 
-        <a href="#">
-            My Account
-        </a>
-
-        <a href="#">
-            My Orders
-        </a>
-
-        <a href="#">
-            Shipping
-        </a>
-
-        <a href="#">
-            Payment
-        </a>
+      <button onclick="openCategory('ipad')">iPad</button>
+      <button onclick="openCategory('watch')">Apple Watch</button>
+      <button onclick="openCategory('iphone')">Displays</button>
+      <button onclick="openCategory('iphone')">Batteries</button>
 
     </div>
 
 
     <div>
 
-        <h4>
-            HEXA Mobile Spare
-        </h4>
+      <h3>Customer Support</h3>
 
-        <p>
-            Quality spare parts
-            for mobile technicians
-            and repair shops.
-        </p>
-
-        <p>
-            🇮🇳 All India Delivery
-        </p>
+      <p>📦 All India Shipping</p>
+      <p>💳 UPI / COD</p>
+      <p>🔒 Secure Checkout</p>
+      <p>📞 Contact Support</p>
 
     </div>
+
+  </div>
+
+
+  <div class="footer-bottom">
+
+    © 2026 HEXA Mobile Spare.
+    All rights reserved.
+
+  </div>
 
 </footer>
 
 
-<div class="copyright">
+<!-- =========================================================
+     LOGIN MODAL
+========================================================= -->
 
-    © 2026 HEXA Mobile Spare.
-    All Rights Reserved.
+<div id="loginModal" class="modal">
+
+  <div class="modal-box">
+
+    <button class="close" onclick="closeLogin()">×</button>
+
+    <div class="login-logo">
+      HEXA
+    </div>
+
+    <h2>Sign in to HEXA</h2>
+
+    <p class="muted">
+      Login is required before placing an order.
+    </p>
+
+
+    <button class="google-btn" onclick="loginGoogle()">
+      <span>G</span>
+      Continue with Google
+    </button>
+
+
+    <div class="or">
+      <span>OR</span>
+    </div>
+
+
+    <input
+      id="mobileLogin"
+      class="modal-input"
+      type="tel"
+      maxlength="10"
+      placeholder="Enter mobile number"
+    >
+
+    <button
+      class="primary-btn full"
+      onclick="loginMobile()"
+    >
+      Continue with Mobile
+    </button>
+
+  </div>
 
 </div>
 
 
-<script src="data.js"></script>
+<!-- =========================================================
+     CART MODAL
+========================================================= -->
 
+<div id="cartModal" class="modal">
+
+  <div class="modal-box cart-modal">
+
+    <button class="close" onclick="closeCart()">×</button>
+
+    <h2>Your Cart</h2>
+
+    <div id="cartItems"></div>
+
+    <div id="cartSummary"></div>
+
+  </div>
+
+</div>
+
+
+<!-- =========================================================
+     CHECKOUT MODAL
+========================================================= -->
+
+<div id="checkoutModal" class="modal">
+
+  <div class="modal-box checkout-box">
+
+    <button class="close" onclick="closeCheckout()">×</button>
+
+    <h2>Checkout</h2>
+
+    <div id="checkoutContent"></div>
+
+  </div>
+
+</div>
+
+
+<!-- =========================================================
+     PRODUCT MODAL
+========================================================= -->
+
+<div id="productModal" class="modal">
+
+  <div class="modal-box product-modal">
+
+    <button class="close" onclick="closeProduct()">×</button>
+
+    <div id="productDetails"></div>
+
+  </div>
+
+</div>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script src="data.js"></script>
 <script src="app.js"></script>
 
-
 </body>
-
 </html>
