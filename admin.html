@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
+<title>
+HEXA Mobile Spare | Admin
+</title>
+
+<style>
+
+:root {
+  --green:#168447;
+  --dark:#102119;
+  --light:#f4faf6;
+  --border:#dfe8e2;
+  --text:#1d2821;
+  --muted:#6b756f;
+}
+
+* {
+  box-sizing:border-box;
+}
+
+body {
+  margin:0;
+
+  font-family:
+    Inter,
+    Arial,
+    sans-serif;
+
+  background:#f5f8f6;
+
+  color:var(--text);
+}
+
+.admin-header {
+  background:var(--dark);
+
+  color:white;
+
+  padding:18px 30px;
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+}
+
+.logo {
+  color:#72d39a;
+
+  font-size:24px;
+
+  font-weight:900;
+}
+
+.admin-layout {
+  display:flex;
+
+  min-height:calc(100vh - 70px);
+}
+
+.sidebar {
+  width:230px;
+
+  background:white;
+
+  border-right:1px solid var(--border);
+
+  padding:20px 12px;
+}
+
+.sidebar button {
+  width:100%;
+
+  border:0;
+
+  background:white;
+
+  padding:13px;
+
+  text-align:left;
+
+  border-radius:9px;
+
+  font-weight:700;
+
+  color:#455148;
+
+  margin-bottom:4px;
+}
+
+.sidebar button:hover,
+.sidebar button.active {
+  background:#e8f6ed;
+
+  color:var(--green);
+}
+
+.content {
+  flex:1;
+
+  padding:30px;
+
+  max-width:1400px;
+}
+
+.dashboard-grid {
+  display:grid;
+
+  grid-template-columns:
+    repeat(4,1fr);
+
+  gap:15px;
+}
+
+.stat {
+  background:white;
+
+  border:1px solid var(--border);
+
+  border-radius:15px;
+
+  padding:20px;
+}
+
+.stat span {
+  color:var(--muted);
+
+  font-size:12px;
+}
+
+.stat strong {
+  display:block;
+
+  font-size:28px;
+
+  margin-top:8px;
+}
+
+.panel {
+  background:white;
+
+  border:1px solid var(--border);
+
+  border-radius:16px;
+
+  padding:22px;
+
+  margin-top:20px;
+}
+
+.panel h2 {
+  margin-top:0;
+}
+
+table {
+  width:100%;
+
+  border-collapse:collapse;
+}
+
+th,
+td {
+  padding:13px;
+
+  border-bottom:1px solid var(--border);
+
+  text-align:left;
+
+  font-size:12px;
+}
+
+th {
+  background:#f4f8f5;
+}
+
+input,
+select,
+textarea {
+  width:100%;
+
+  padding:10px;
+
+  border:1px solid var(--border);
+
+  border-radius:8px;
+}
+
+.form-grid {
+  display:grid;
+
+  grid-template-columns:
+    repeat(2,1fr);
+
+  gap:13px;
+}
+
+.field {
+  display:flex;
+
+  flex-direction:column;
+
+  gap:5px;
+}
+
+.field label {
+  font-size:11px;
+
+  font-weight:700;
+}
+
+.primary {
+  background:var(--green);
+
+  color:white;
+
+  border:0;
+
+  border-radius:8px;
+
+  padding:11px 17px;
+
+  font-weight:700;
+}
+
+.status {
+  background:#e7f6ed;
+
+  color:#116438;
+
+  border-radius:20px;
+
+  padding:5px 8px;
+
+  font-size:10px;
+
+  font-weight:800;
+}
+
+@media(max-width:800px) {
+
+  .sidebar {
+    width:65px;
+  }
+
+  .sidebar button {
+    font-size:0;
+  }
+
+  .sidebar button:first-letter {
+    font-size:18px;
+  }
+
+  .dashboard-grid {
+    grid-template-columns:
+      repeat(2,1fr);
+  }
+
+  .form-grid {
+    grid-template-columns:1fr;
+  }
+
+  .content {
+    padding:15px;
+  }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header class="admin-header">
+
+  <div class="logo">
+    HEXA ADMIN
+  </div>
+
+  <div>
+    Mobile Spare Management
+  </div>
+
+</header>
+
+
+<div class="admin-layout">
+
+
+<aside class="sidebar">
+
+  <button
+    class="active"
+    onclick="showDashboard()"
+  >
+    📊 Dashboard
+  </button>
+
+  <button
+    onclick="showProducts()"
+  >
+    📦 Products
+  </button>
+
+  <button
+    onclick="showBanners()"
+  >
+    🖼️ Banners
+  </button>
+
+  <button
+    onclick="showOrders()"
+  >
+    🛒 Orders
+  </button>
+
+  <button
+    onclick="showCustomers()"
+  >
+    👥 Customers
+  </button>
+
+</aside>
+
+
+<main
+  id="adminContent"
+  class="content"
+></main>
+
+
+</div>
+
+
+<script>
+
+let orders =
+  JSON.parse(
+    localStorage.getItem("hexaOrders")
+  ) || [];
+
+
+let products =
+  JSON.parse(
+    localStorage.getItem("hexaAdminProducts")
+  ) || [];
+
+
+function showDashboard() {
+
+  orders =
+    JSON.parse(
+      localStorage.getItem("hexaOrders")
+    ) || [];
+
+
+  const sales =
+    orders.reduce(
+      (sum, order) =>
+        sum + order.total,
+      0
+    );
+
+
+  document.getElementById(
+    "adminContent"
+  ).innerHTML = `
+
+    <h1>
+      Dashboard
+    </h1>
+
+    <p style="color:#6b756f">
+      HEXA Mobile Spare administration
+    </p>
+
+
+    <div class="dashboard-grid">
+
+      <div class="stat">
+
+        <span>
+          Total Orders
+        </span>
+
+        <strong>
+          ${orders.length}
+        </strong>
+
+      </div>
+
+
+      <div class="stat">
+
+        <span>
+          Total Sales
+        </span>
+
+        <strong>
+          ₹${sales.toLocaleString()}
+        </strong>
+
+      </div>
+
+
+      <div class="stat">
+
+        <span>
+          Products
+        </span>
+
+        <strong>
+          ${products.length}
+        </strong>
+
+      </div>
+
+
+      <div class="stat">
+
+        <span>
+          Pending Orders
+        </span>
+
+        <strong>
+          ${
+            orders.filter(
+              o =>
+                o.status !==
+                "Delivered"
+            ).length
+          }
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <div class="panel">
+
+      <h2>
+        Recent Orders
+      </h2>
+
+      ${orders.length
+        ? `
+        <table>
+
+          <tr>
+            <th>Order</th>
+            <th>Customer</th>
+            <th>Total</th>
+            <th>Status</th>
+          </tr>
+
+          ${orders
+            .slice(0,10)
+            .map(
+              order => `
+
+                <tr>
+
+                  <td>
+                    ${order.id}
+                  </td>
+
+                  <td>
+                    ${order.customer}
+                  </td>
+
+                  <td>
+                    ₹${order.total.toLocaleString()}
+                  </td>
+
+                  <td>
+                    <span class="status">
+                      ${order.status}
+                    </span>
+                  </td>
+
+                </tr>
+
+              `
+            )
+            .join("")}
+
+        </table>
+        `
+        :
+        "<p>No orders yet.</p>"
+      }
+
+    </div>
+
+  `;
+
+}
+
+
+function showProducts() {
+
+  document.getElementById(
+    "adminContent"
+  ).innerHTML = `
+
+    <h1>
+      Products
+    </h1>
+
+    <div class="panel">
+
+      <h2>
+        Add Product
+      </h2>
+
+      <div class="form-grid">
+
+        <div class="field">
+
+          <label>
+            Product Name
+          </label>
+
+          <input
+            id="pName"
+            placeholder="iPhone 13 Pro Display"
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <label>
+            Category
+          </label>
+
+          <select id="pCategory">
+
+            <option>
+              iPhone
+            </option>
+
+            <option>
+              Accessories
+            </option>
+
+            <option>
+              Tools
+            </option>
+
+            <option>
+              iPad
+            </option>
+
+            <option>
+              Apple Watch
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <div class="field">
+
+          <label>
+            MRP
+          </label>
+
+          <input
+            id="pMrp"
+            type="number"
+            placeholder="5000"
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <label>
+            Selling Price
+          </label>
+
+          <input
+            id="pPrice"
+            type="number"
+            placeholder="3500"
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <label>
+            Stock
+          </label>
+
+          <input
+            id="pStock"
+            type="number"
+            placeholder="10"
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <label>
+            Image URL
+          </label>
+
+          <input
+            id="pImage"
+            placeholder="https://..."
+          >
+
+        </div>
+
+      </div>
+
+
+      <br>
+
+      <button
+        class="primary"
+        onclick="addAdminProduct()"
+      >
+        Add Product
+      </button>
+
+    </div>
+
+
+    <div class="panel">
+
+      <h2>
+        Product Catalogue
+      </h2>
+
+      ${
+        products.length
+          ?
+          `
+          <table>
+
+            <tr>
+
+              <th>
+                Product
+              </th>
+
+              <th>
+                Category
+              </th>
+
+              <th>
+                MRP
+              </th>
+
+              <th>
+                Selling
+              </th>
+
+              <th>
+                Stock
+              </th>
+
+            </tr>
+
+            ${products.map(
+              product => `
+
+                <tr>
+
+                  <td>
+                    ${product.name}
+                  </td>
+
+                  <td>
+                    ${product.category}
+                  </td>
+
+                  <td>
+                    ₹${product.mrp}
+                  </td>
+
+                  <td>
+                    ₹${product.price}
+                  </td>
+
+                  <td>
+                    ${product.stock}
+                  </td>
+
+                </tr>
+
+              `
+            ).join("")}
+
+          </table>
+          `
+          :
+          "<p>No manually added products yet.</p>"
+      }
+
+    </div>
+
+  `;
+
+}
+
+
+function addAdminProduct() {
+
+  const product = {
+
+    name:
+      document.getElementById("pName").value,
+
+    category:
+      document.getElementById("pCategory").value,
+
+    mrp:
+      Number(
+        document.getElementById("pMrp").value
+      ),
+
+    price:
+      Number(
+        document.getElementById("pPrice").value
+      ),
+
+    stock:
+      Number(
+        document.getElementById("pStock").value
+      ),
+
+    image:
+      document.getElementById("pImage").value
+
+  };
+
+
+  if (!product.name) {
+
+    alert(
+      "Enter product name."
+    );
+
+    return;
+
+  }
+
+
+  products.push(product);
+
+
+  localStorage.setItem(
+    "hexaAdminProducts",
+    JSON.stringify(products)
+  );
+
+
+  alert(
+    "Product added."
+  );
+
+
+  showProducts();
+
+}
+
+
+function showBanners() {
+
+  document.getElementById(
+    "adminContent"
+  ).innerHTML = `
+
+    <h1>
+      Home Page Banners
+    </h1>
+
+    <div class="panel">
+
+      <h2>
+        Banner Management
+      </h2>
+
+      <div class="form-grid">
+
+        <div class="field">
+
+          <label>
+            Banner Title
+          </label>
+
+          <input
+            id="bannerTitle"
+            value="Professional iPhone Spare Parts"
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <label>
+            Banner Image URL
+          </label>
+
+          <input
+            id="bannerImage"
+            placeholder="https://..."
+          >
+
+        </div>
+
+      </div>
+
+      <br>
+
+      <button
+        class="primary"
+        onclick="saveBanner()"
+      >
+        Save Banner
+      </button>
+
+    </div>
+
+  `;
+
+}
+
+
+function saveBanner() {
+
+  localStorage.setItem(
+    "hexaBannerTitle",
+    document.getElementById(
+      "bannerTitle"
+    ).value
+  );
+
+  localStorage.setItem(
+    "hexaBannerImage",
+    document.getElementById(
+      "bannerImage"
+    ).value
+  );
+
+
+  alert(
+    "Banner settings saved."
+  );
+
+}
+
+
+function showOrders() {
+
+  orders =
+    JSON.parse(
+      localStorage.getItem("hexaOrders")
+    ) || [];
+
+
+  document.getElementById(
+    "adminContent"
+  ).innerHTML = `
+
+    <h1>
+      Orders
+    </h1>
+
+    <div class="panel">
+
+      ${
+        orders.length
+          ?
+          `
+          <table>
+
+            <tr>
+
+              <th>
+                Order
+              </th>
+
+              <th>
+                Customer
+              </th>
+
+              <th>
+                Payment
+              </th>
+
+              <th>
+                Total
+              </th>
+
+              <th>
+                Status
+              </th>
+
+              <th>
+                Shipping
+              </th>
+
+            </tr>
+
+            ${orders.map(
+              (order,index) => `
+
+                <tr>
+
+                  <td>
+                    ${order.id}
+                  </td>
+
+                  <td>
+                    ${order.customer}
+                    <br>
+                    ${order.mobile}
+                  </td>
+
+                  <td>
+                    ${order.payment}
+                    <br>
+                    ${order.paymentStatus}
+                  </td>
+
+                  <td>
+                    ₹${order.total.toLocaleString()}
+                  </td>
+
+                  <td>
+
+                    <select
+                      onchange="
+                        updateOrderStatus(
+                          ${index},
+                          this.value
+                        )
+                      "
+                    >
+
+                      ${[
+                        "Order Placed",
+                        "Confirmed",
+                        "Shipped",
+                        "Delivered"
+                      ]
+                        .map(
+                          status => `
+                            <option
+                              ${
+                                order.status ===
+                                status
+                                  ? "selected"
+                                  : ""
+                              }
+                            >
+                              ${status}
+                            </option>
+                          `
+                        )
+                        .join("")}
+
+                    </select>
+
+                  </td>
+
+                  <td>
+
+                    <select
+                      onchange="
+                        updateShipping(
+                          ${index},
+                          this.value
+                        )
+                      "
+                    >
+
+                      ${[
+                        "Processing",
+                        "Packed",
+                        "Shipped",
+                        "Out for Delivery",
+                        "Delivered"
+                      ]
+                        .map(
+                          status => `
+                            <option
+                              ${
+                                order.shippingStatus ===
+                                status
+                                  ? "selected"
+                                  : ""
+                              }
+                            >
+                              ${status}
+                            </option>
+                          `
+                        )
+                        .join("")}
+
+                    </select>
+
+                  </td>
+
+                </tr>
+
+              `
+            ).join("")}
+
+          </table>
+          `
+          :
+          "<p>No orders available.</p>"
+      }
+
+    </div>
+
+  `;
+
+}
+
+
+function updateOrderStatus(
+  index,
+  status
+) {
+
+  orders[index].status =
+    status;
+
+
+  localStorage.setItem(
+    "hexaOrders",
+    JSON.stringify(orders)
+  );
+
+
+  alert(
+    "Order status updated."
+  );
+
+}
+
+
+function updateShipping(
+  index,
+  status
+) {
+
+  orders[index].shippingStatus =
+    status;
+
+
+  localStorage.setItem(
+    "hexaOrders",
+    JSON.stringify(orders)
+  );
+
+
+  alert(
+    "Shipping status updated."
+  );
+
+}
+
+
+function showCustomers() {
+
+  const user =
+    JSON.parse(
+      localStorage.getItem("hexaUser")
+    );
+
+
+  document.getElementById(
+    "adminContent"
+  ).innerHTML = `
+
+    <h1>
+      Customers
+    </h1>
+
+    <div class="panel">
+
+      <p>
+        Current demo customer:
+      </p>
+
+      <br>
+
+      ${
+        user
+          ?
+          `
+          <strong>
+            ${user.name || "Customer"}
+          </strong>
+
+          <br><br>
+
+          Mobile:
+          ${user.mobile || "Google Account"}
+          `
+          :
+          "No customer logged in."
+      }
+
+    </div>
+
+  `;
+
+}
+
+
+showDashboard();
+
+</script>
+
+</body>
+
+</html>
